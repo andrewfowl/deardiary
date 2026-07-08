@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "gen:icons": "node scripts/gen-icons.mjs",
-    "dist:win": "electron-vite build && electron-builder --win",
+    "dist:win": "electron-vite build && electron-builder --win --publish never",
     "dist:dir": "electron-vite build && electron-builder --dir"
   },
   "build": {
