@@ -1,0 +1,65 @@
+{
+  "name": "deardiary",
+  "version": "0.1.0",
+  "description": "Automatic work journal for Windows — records your screen locally, uses AI to build a timeline of your day, and helps you get value from it later.",
+  "main": "./out/main/index.js",
+  "author": "andrewfowl",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "start": "electron-vite preview",
+    "build": "electron-vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "gen:icons": "node scripts/gen-icons.mjs",
+    "dist:win": "electron-vite build && electron-builder --win",
+    "dist:dir": "electron-vite build && electron-builder --dir"
+  },
+  "build": {
+    "appId": "com.deardiary.app",
+    "productName": "DearDiary",
+    "directories": {
+      "buildResources": "resources",
+      "output": "dist"
+    },
+    "files": [
+      "out/**"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "resources/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "deleteAppDataOnUninstall": false
+    }
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.2.0",
+    "electron": "^43.1.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "typescript": "^6.0.3",
+    "vite": "^7.3.6",
+    "vitest": "^4.1.10"
+  }
+}
