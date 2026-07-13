@@ -15,6 +15,9 @@ const api: DearDiaryApi = {
   setPaused: (paused: boolean) => ipcRenderer.invoke('capture:setPaused', paused),
   getStatus: () => ipcRenderer.invoke('status:get'),
   analyzeNow: () => ipcRenderer.invoke('pipeline:runNow'),
+  getLicense: () => ipcRenderer.invoke('license:get'),
+  activateLicense: (key: string) => ipcRenderer.invoke('license:activate', key),
+  openExternal: (url: string) => ipcRenderer.invoke('shell:open', url),
   onStatus: (cb: (status: CaptureStatus) => void) => {
     const listener = (_event: unknown, status: CaptureStatus): void => cb(status)
     ipcRenderer.on('status:update', listener)

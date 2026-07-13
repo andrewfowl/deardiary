@@ -7,6 +7,7 @@ import { AnalysisPipeline } from './pipeline'
 import { StatusBus } from './status'
 import { registerIpc } from './ipc'
 import { isProviderConfigured } from './ai/provider'
+import { evaluateLicense, isRecordingAllowed } from './license'
 import { TRAY_ICON_DATA_URL } from './trayIcon'
 
 let mainWindow: BrowserWindow | null = null
@@ -27,16 +28,33 @@ function init(): void {
   const db = new JournalDb(join(userData, 'deardiary.db'))
   const status = new StatusBus()
 
-  const capture = new CaptureService(db, settings, join(userData, 'screenshots'), (patch) =>
-    status.update(patch)
+  // The 14-day trial starts the first time the app runs.
+  if (settings.get().trialStartTs === 0) {
+    settings.update({ trialStartTs: Date.now() })
+  }
+  const licenseNow = (): ReturnType<typeof evaluateLicense> => {
+    const s = settings.get()
+    return evaluateLicense(s.licenseKey || null, s.trialStartTs)
+  }
+  const allowed = (): boolean => isRecordingAllowed(licenseNow())
+
+  const capture = new CaptureService(
+    db,
+    settings,
+    join(userData, 'screenshots'),
+    allowed,
+    (patch) => status.update(patch)
   )
-  const pipeline = new AnalysisPipeline(db, settings, (patch) => status.update(patch))
+  const pipeline = new AnalysisPipeline(db, settings, allowed, (patch) => status.update(patch))
 
   status.update({
     paused: settings.get().paused,
     providerConfigured: isProviderConfigured(settings.get()),
-    pendingScreenshots: 0
+    pendingScreenshots: 0,
+    license: licenseNow()
   })
+  // Keep the trial countdown / expiry state fresh while the app runs.
+  setInterval(() => status.update({ license: licenseNow() }), 60_000)
 
   registerIpc(db, settings, pipeline, status)
   createWindow(status)
@@ -103,6 +121,7 @@ function createTray(settings: SettingsStore, status: StatusBus): void {
 
   const rebuild = (): void => {
     const paused = settings.get().paused
+    tray?.setToolTip(paused ? 'DearDiary — paused' : 'DearDiary — recording your work journal')
     const menu = Menu.buildFromTemplate([
       { label: 'Open DearDiary', click: () => showWindow() },
       {

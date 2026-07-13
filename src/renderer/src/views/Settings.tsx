@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react'
-import { api } from '../api'
-import type { ProviderId, Settings } from '../../../shared/types'
-
-const PROVIDERS: Array<{ id: ProviderId; label: string; note: string }> = [
-  { id: 'gemini', label: 'Google Gemini', note: 'Free tier available — the easiest way to start.' },
-  { id: 'anthropic', label: 'Anthropic Claude', note: 'Highest-quality summaries and chat.' },
-  { id: 'openai', label: 'OpenAI (or compatible)', note: 'Any OpenAI-compatible endpoint.' },
-  { id: 'ollama', label: 'Ollama (local)', note: 'Fully offline — nothing ever leaves your PC.' }
-]
+import { api } from './../api'
+import ProviderForm, { Field } from '../components/ProviderForm'
+import { KeyIcon } from '../components/Icons'
+import type { LicenseStatus, Settings } from '../../../shared/types'
+import { BUY_URL } from '../../../shared/links'
 
 export default function SettingsView(): React.JSX.Element {
   const [settings, setSettings] = useState<Settings | null>(null)
@@ -53,96 +49,7 @@ export default function SettingsView(): React.JSX.Element {
           Screenshots are analyzed by the provider you choose. With Ollama everything stays on
           your machine.
         </p>
-        <div className="provider-grid">
-          {PROVIDERS.map((p) => (
-            <button
-              key={p.id}
-              className={`provider-card ${settings.provider === p.id ? 'selected' : ''}`}
-              onClick={() => patch({ provider: p.id })}
-            >
-              <div className="provider-name">{p.label}</div>
-              <div className="provider-note">{p.note}</div>
-            </button>
-          ))}
-        </div>
-
-        {settings.provider === 'gemini' && (
-          <>
-            <Field label="Gemini API key">
-              <input
-                type="password"
-                value={settings.geminiApiKey}
-                onChange={(e) => patch({ geminiApiKey: e.target.value })}
-                placeholder="AIza…"
-              />
-            </Field>
-            <Field label="Model">
-              <input
-                value={settings.geminiModel}
-                onChange={(e) => patch({ geminiModel: e.target.value })}
-              />
-            </Field>
-          </>
-        )}
-        {settings.provider === 'anthropic' && (
-          <>
-            <Field label="Anthropic API key">
-              <input
-                type="password"
-                value={settings.anthropicApiKey}
-                onChange={(e) => patch({ anthropicApiKey: e.target.value })}
-                placeholder="sk-ant-…"
-              />
-            </Field>
-            <Field label="Model">
-              <input
-                value={settings.anthropicModel}
-                onChange={(e) => patch({ anthropicModel: e.target.value })}
-              />
-            </Field>
-          </>
-        )}
-        {settings.provider === 'openai' && (
-          <>
-            <Field label="API key">
-              <input
-                type="password"
-                value={settings.openaiApiKey}
-                onChange={(e) => patch({ openaiApiKey: e.target.value })}
-                placeholder="sk-…"
-              />
-            </Field>
-            <Field label="Base URL">
-              <input
-                value={settings.openaiBaseUrl}
-                onChange={(e) => patch({ openaiBaseUrl: e.target.value })}
-              />
-            </Field>
-            <Field label="Model (must support vision)">
-              <input
-                value={settings.openaiModel}
-                onChange={(e) => patch({ openaiModel: e.target.value })}
-              />
-            </Field>
-          </>
-        )}
-        {settings.provider === 'ollama' && (
-          <>
-            <Field label="Ollama base URL">
-              <input
-                value={settings.ollamaBaseUrl}
-                onChange={(e) => patch({ ollamaBaseUrl: e.target.value })}
-              />
-            </Field>
-            <Field label="Model (must support vision, e.g. qwen2.5vl, llava)">
-              <input
-                value={settings.ollamaModel}
-                onChange={(e) => patch({ ollamaModel: e.target.value })}
-              />
-            </Field>
-          </>
-        )}
-
+        <ProviderForm settings={settings} onChange={patch} />
         <div className="row gap">
           <button className="btn" onClick={() => void save()}>
             {saved ? 'Saved ✓' : 'Save'}
@@ -213,16 +120,102 @@ export default function SettingsView(): React.JSX.Element {
           {saved ? 'Saved ✓' : 'Save'}
         </button>
       </div>
+
+      <LicensePanel />
     </div>
   )
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }): React.JSX.Element {
+function LicensePanel(): React.JSX.Element {
+  const [license, setLicense] = useState<LicenseStatus | null>(null)
+  const [key, setKey] = useState('')
+  const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null)
+  const [busy, setBusy] = useState(false)
+
+  useEffect(() => {
+    void api.getLicense().then(setLicense)
+  }, [])
+
+  const activate = async (): Promise<void> => {
+    setBusy(true)
+    setResult(null)
+    try {
+      const res = await api.activateLicense(key)
+      setResult(res)
+      if (res.ok) {
+        setKey('')
+        setLicense(await api.getLicense())
+      }
+    } finally {
+      setBusy(false)
+    }
+  }
+
   return (
-    <label className="field">
-      <span className="field-label">{label}</span>
-      {children}
-    </label>
+    <div className="panel">
+      <div className="panel-header">
+        <h3 className="row gap-sm">
+          <KeyIcon /> License
+        </h3>
+        {license && <LicenseStateChip license={license} />}
+      </div>
+      {license && <LicenseDetails license={license} />}
+      <Field label="License key">
+        <input
+          value={key}
+          onChange={(e) => setKey(e.target.value)}
+          placeholder="DDRY-…"
+          spellCheck={false}
+        />
+      </Field>
+      <div className="row gap">
+        <button className="btn" onClick={() => void activate()} disabled={busy || !key.trim()}>
+          {busy ? 'Activating…' : 'Activate'}
+        </button>
+        <button className="btn ghost" onClick={() => void api.openExternal(BUY_URL)}>
+          {license?.state === 'licensed' ? 'Manage / renew' : 'Buy a license'}
+        </button>
+      </div>
+      {result && <div className={`banner ${result.ok ? 'ok' : 'warn'}`}>{result.message}</div>}
+    </div>
+  )
+}
+
+function LicenseStateChip({ license }: { license: LicenseStatus }): React.JSX.Element {
+  const map: Record<string, { label: string; cls: string }> = {
+    trial: { label: `Trial · ${license.trialDaysLeft}d left`, cls: '' },
+    trial_expired: { label: 'Trial ended', cls: 'distraction' },
+    licensed: { label: license.plan === 'lifetime' ? 'Lifetime' : 'Annual', cls: 'ok-chip' },
+    license_expired: { label: 'Expired', cls: 'distraction' }
+  }
+  const entry = map[license.state]
+  return <span className={`chip ${entry.cls}`}>{entry.label}</span>
+}
+
+function LicenseDetails({ license }: { license: LicenseStatus }): React.JSX.Element {
+  if (license.state === 'licensed') {
+    return (
+      <p className="muted">
+        Licensed to <strong>{license.email}</strong>
+        {license.plan === 'annual' && license.expiresAt
+          ? ` — renews ${new Date(license.expiresAt).toLocaleDateString()}.`
+          : ' — lifetime, no expiry.'}
+      </p>
+    )
+  }
+  if (license.state === 'trial') {
+    return (
+      <p className="muted">
+        You're on the free trial ({license.trialDaysLeft} days left). Buy a license to keep
+        recording after it ends — one-time or annual.
+      </p>
+    )
+  }
+  return (
+    <p className="muted">
+      Recording is paused. Your recorded history stays fully accessible — activate a license to
+      resume recording and analysis.
+    </p>
   )
 }
 

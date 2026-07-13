@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Troubleshooting — DearDiary Docs</title>
+  <link rel="icon" href="../assets/icon.png" />
+  <link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="../"><img src="../assets/icon.png" alt="" />DearDiary</a>
+    <a class="link" href="../#pricing">Pricing</a>
+    <a class="link" href="./">Docs</a>
+    <a class="btn" href="https://github.com/andrewfowl/deardiary/releases">Download</a>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <nav class="docs-nav">
+    <h4>Documentation</h4>
+    <ul>
+      <li><a href="./">Getting started</a></li>
+      <li><a href="providers.html">AI providers</a></li>
+      <li><a href="privacy.html">Privacy &amp; data</a></li>
+      <li><a href="licensing.html">Licensing</a></li>
+      <li><a href="troubleshooting.html" class="active">Troubleshooting</a></li>
+    </ul>
+  </nav>
+
+  <article class="docs-body">
+    <h1>Troubleshooting</h1>
+    <p class="lead">The status footer (bottom-left of the app) is the diagnostic hub — it shows recording state, pending screenshots, and the last error.</p>
+
+    <h2>No timeline cards are appearing</h2>
+    <ol>
+      <li><strong>Is a provider configured?</strong> A red warning in the status footer means no — set one up in Settings and use <em>Save &amp; test connection</em>.</li>
+      <li><strong>Are screenshots pending?</strong> The footer counts shots awaiting analysis. Batches run every ~15 minutes; click <strong>Analyze now</strong> to force one.</li>
+      <li><strong>Is there an analysis error?</strong> The footer shows the provider's last error (bad key, quota, model without vision support). Fix, then <em>Analyze now</em> — failed batches retry automatically after 5 minutes.</li>
+    </ol>
+
+    <h2>The dot says it isn't recording</h2>
+    <table>
+      <tr><th>Footer says</th><th>Why</th><th>Fix</th></tr>
+      <tr><td>Paused</td><td>You paused it</td><td>Resume from footer or tray</td></tr>
+      <tr><td>Idle — not recording</td><td>No input for 3+ min</td><td>Normal; resumes when you're back</td></tr>
+      <tr><td>Screen locked</td><td>Session locked</td><td>Normal; resumes on unlock</td></tr>
+      <tr><td>Not recording (license)</td><td>Trial/license ended</td><td>Activate a key in Settings → License</td></tr>
+    </table>
+
+    <h2>Provider errors</h2>
+    <ul>
+      <li><strong>401 / invalid key</strong> — re-paste the key; check for stray spaces.</li>
+      <li><strong>429 / quota</strong> — free-tier limits hit; batches retry with backoff, or switch model/provider.</li>
+      <li><strong>Ollama: connection refused</strong> — is <code>ollama serve</code> running? Is the model pulled (<code>ollama pull qwen2.5vl</code>)?</li>
+      <li><strong>Model has no vision</strong> — timeline analysis needs a vision-capable model; see <a href="providers.html">providers</a>.</li>
+    </ul>
+
+    <h2>Timeline quality is poor</h2>
+    <ul>
+      <li>Try a stronger model (e.g. Claude, or a larger local model).</li>
+      <li>Shorter batches (Settings → "Analyze batches of") produce finer-grained cards.</li>
+      <li>Multi-monitor users: enable <em>Capture all displays</em> so activity on secondary screens is seen.</li>
+    </ul>
+
+    <h2>Disk usage</h2>
+    <p>Screenshots are ~100–200 KB each — roughly 0.5–1 GB per week at defaults, self-cleaning after 7 days. Lower the capture frequency or retention in Settings if that's too much.</p>
+
+    <h2>Start over</h2>
+    <ol>
+      <li>Quit DearDiary from the tray.</li>
+      <li>Delete <code>%APPDATA%\DearDiary</code> (this erases your journal too — back up <code>deardiary.db</code> first if you want history).</li>
+      <li>Relaunch; the setup wizard runs again.</li>
+    </ol>
+
+    <h2>Still stuck?</h2>
+    <p>Email <a href="mailto:support@deardiary.app">support@deardiary.app</a> or open a <a href="https://github.com/andrewfowl/deardiary/issues">GitHub issue</a> with what the status footer shows.</p>
+  </article>
+</div>
+
+</body>
+</html>

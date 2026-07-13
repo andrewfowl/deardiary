@@ -22,6 +22,8 @@ export class CaptureService {
     private db: JournalDb,
     private settings: SettingsStore,
     private screenshotsDir: string,
+    /** Entitlement gate — false while the trial/license has expired. */
+    private isAllowed: () => boolean,
     private onUpdate: (patch: {
       locked?: boolean
       idle?: boolean
@@ -49,7 +51,8 @@ export class CaptureService {
 
   private async tick(): Promise<void> {
     const s = this.settings.get()
-    if (s.paused || this.locked || this.capturing) return
+    if (!s.onboarded || s.paused || this.locked || this.capturing) return
+    if (!this.isAllowed()) return
 
     const now = Date.now()
     if (now - this.lastCaptureTs < s.captureIntervalSec * 1000) return

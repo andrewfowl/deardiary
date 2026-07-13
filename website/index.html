@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DearDiary — your workday, written down for you</title>
+  <meta name="description" content="DearDiary quietly records your Windows PC and uses AI to turn your day into a timeline, journal, standup updates and answers. Private by design — everything stays on your machine." />
+  <link rel="icon" href="assets/icon.png" />
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="/"><img src="assets/icon.png" alt="" />DearDiary</a>
+    <a class="link" href="#how">How it works</a>
+    <a class="link" href="#features">Features</a>
+    <a class="link" href="#privacy">Privacy</a>
+    <a class="link" href="#pricing">Pricing</a>
+    <a class="link" href="docs/">Docs</a>
+    <a class="btn" href="#pricing">Download free trial</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <h1>Your workday, <em>written down for you</em></h1>
+      <p class="sub">
+        DearDiary quietly records your Windows PC while you work. AI turns it into a
+        timeline of your day — then into journal entries, standup updates, and answers
+        to "what was I doing on Tuesday?"
+      </p>
+      <div class="cta-row">
+        <a class="btn big" href="https://github.com/andrewfowl/deardiary/releases">Download for Windows</a>
+        <a class="btn big ghost" href="#how">See how it works</a>
+      </div>
+      <div class="fineprint">Free 14-day trial · No account needed · Windows 10/11</div>
+
+      <div class="hero-shot" aria-hidden="true">
+        <!-- Stylized product mockup -->
+        <svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img">
+          <rect width="900" height="520" fill="#101318"/>
+          <!-- sidebar -->
+          <rect width="190" height="520" fill="#171b22"/>
+          <rect x="18" y="22" width="16" height="16" rx="5" fill="#7c9cf5"/>
+          <text x="44" y="35" fill="#e6eaf2" font-family="Segoe UI, sans-serif" font-size="15" font-weight="700">DearDiary</text>
+          <rect x="12" y="64" width="166" height="30" rx="8" fill="#1e242e"/>
+          <text x="42" y="84" fill="#e6eaf2" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600">Timeline</text>
+          <text x="42" y="122" fill="#97a1b3" font-family="Segoe UI, sans-serif" font-size="13">Journal</text>
+          <text x="42" y="156" fill="#97a1b3" font-family="Segoe UI, sans-serif" font-size="13">Ask your day</text>
+          <text x="42" y="190" fill="#97a1b3" font-family="Segoe UI, sans-serif" font-size="13">Standup</text>
+          <text x="42" y="224" fill="#97a1b3" font-family="Segoe UI, sans-serif" font-size="13">Settings</text>
+          <circle cx="26" cy="474" r="4" fill="#5fb8a5"/>
+          <text x="38" y="478" fill="#e6eaf2" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="600">Recording</text>
+          <!-- header -->
+          <text x="230" y="52" fill="#e6eaf2" font-family="Segoe UI, sans-serif" font-size="20" font-weight="700">Timeline</text>
+          <text x="700" y="50" fill="#97a1b3" font-family="Segoe UI, sans-serif" font-size="13">‹  Tuesday, Jul 8  ›</text>
+          <!-- ribbon -->
+          <rect x="230" y="76" width="640" height="14" rx="7" fill="#171b22" stroke="#262d38"/>
+          <rect x="232" y="78" width="150" height="10" rx="5" fill="#7c9cf5"/>
+          <rect x="386" y="78" width="60" height="10" rx="5" fill="#c589d9"/>
+          <rect x="450" y="78" width="120" height="10" rx="5" fill="#7c9cf5"/>
+          <rect x="574" y="78" width="40" height="10" rx="5" fill="#e0716f"/>
+          <rect x="618" y="78" width="90" height="10" rx="5" fill="#5fb8a5"/>
+          <rect x="712" y="78" width="120" height="10" rx="5" fill="#e6b455"/>
+          <!-- cards -->
+          <g font-family="Segoe UI, sans-serif">
+            <rect x="230" y="112" width="640" height="86" rx="10" fill="#171b22" stroke="#262d38"/>
+            <rect x="292" y="126" width="4" height="58" rx="2" fill="#7c9cf5"/>
+            <text x="246" y="140" fill="#e6eaf2" font-size="13" font-weight="600">09:04</text>
+            <text x="246" y="158" fill="#97a1b3" font-size="11">1h 21m</text>
+            <text x="310" y="140" fill="#e6eaf2" font-size="14" font-weight="600">Refactoring billing service in VS Code</text>
+            <rect x="580" y="128" width="74" height="17" rx="8.5" fill="none" stroke="#7c9cf5"/>
+            <text x="592" y="140" fill="#7c9cf5" font-size="10.5">Deep work</text>
+            <text x="310" y="164" fill="#97a1b3" font-size="12.5">Editing invoice-retry logic and unit tests in the payments repo.</text>
+            <rect x="230" y="210" width="640" height="86" rx="10" fill="#171b22" stroke="#262d38"/>
+            <rect x="292" y="224" width="4" height="58" rx="2" fill="#c589d9"/>
+            <text x="246" y="238" fill="#e6eaf2" font-size="13" font-weight="600">10:30</text>
+            <text x="246" y="256" fill="#97a1b3" font-size="11">28m</text>
+            <text x="310" y="238" fill="#e6eaf2" font-size="14" font-weight="600">Sprint planning on Zoom</text>
+            <rect x="580" y="226" width="66" height="17" rx="8.5" fill="none" stroke="#c589d9"/>
+            <text x="592" y="238" fill="#c589d9" font-size="10.5">Meetings</text>
+            <text x="310" y="262" fill="#97a1b3" font-size="12.5">Reviewing the sprint board and estimating the payment-flow epics.</text>
+            <rect x="230" y="308" width="640" height="86" rx="10" fill="#171b22" stroke="#262d38"/>
+            <rect x="292" y="322" width="4" height="58" rx="2" fill="#5fb8a5"/>
+            <text x="246" y="336" fill="#e6eaf2" font-size="13" font-weight="600">11:02</text>
+            <text x="246" y="354" fill="#97a1b3" font-size="11">45m</text>
+            <text x="310" y="336" fill="#e6eaf2" font-size="14" font-weight="600">Reading Stripe webhook docs</text>
+            <rect x="580" y="324" width="72" height="17" rx="8.5" fill="none" stroke="#5fb8a5"/>
+            <text x="590" y="336" fill="#5fb8a5" font-size="10.5">Research</text>
+            <text x="310" y="360" fill="#97a1b3" font-size="12.5">Comparing signature verification approaches for the new endpoint.</text>
+            <rect x="230" y="406" width="640" height="86" rx="10" fill="#171b22" stroke="#262d38"/>
+            <rect x="292" y="420" width="4" height="58" rx="2" fill="#e6b455"/>
+            <text x="246" y="434" fill="#e6eaf2" font-size="13" font-weight="600">11:47</text>
+            <text x="246" y="452" fill="#97a1b3" font-size="11">22m</text>
+            <text x="310" y="434" fill="#e6eaf2" font-size="14" font-weight="600">Replying to code review comments</text>
+            <rect x="580" y="422" width="106" height="17" rx="8.5" fill="none" stroke="#e6b455"/>
+            <text x="592" y="434" fill="#e6b455" font-size="10.5">Communication</text>
+            <text x="310" y="458" fill="#97a1b3" font-size="12.5">Responding to review threads on the retry-logic pull request.</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="alt">
+    <div class="wrap center">
+      <p class="kicker">How it works</p>
+      <h2 class="title">No timers. No tagging. No willpower required.</h2>
+      <p class="section-sub">Install it once, and every day writes itself.</p>
+      <div class="steps" style="text-align:left">
+        <div class="step">
+          <span class="num">1</span>
+          <h3>It watches quietly</h3>
+          <p>A screenshot every 30 seconds while you're active. It pauses when you step away or lock your screen, and lives in the system tray with one-click pause.</p>
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <h3>AI writes the timeline</h3>
+          <p>Every ~15 minutes, the AI provider <em>you choose</em> reads the batch and writes what you were actually doing — projects, documents, sites — categorized and de-duplicated.</p>
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <h3>You cash it in</h3>
+          <p>Daily journal entries, instant standup updates, focus stats, and a chat that answers questions about your own time. Your memory, outsourced.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap center">
+      <p class="kicker">Features</p>
+      <h2 class="title">Built to make hindsight effortless</h2>
+      <p class="section-sub">Everything DearDiary records exists to answer one question: <em>what did I actually do?</em></p>
+      <div class="features" style="text-align:left">
+        <div class="feature">
+          <div class="icon">▤</div>
+          <h3>Automatic timeline</h3>
+          <p>A card for every stretch of work — "Editing billing service in VS Code, 9:04–10:25" — with categories and distraction flags.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">✎</div>
+          <h3>Daily journal</h3>
+          <p>A written entry for each day: narrative, highlights, and an honest note about where the time leaked.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">➤</div>
+          <h3>Instant standups</h3>
+          <p>Yesterday / Today / Blockers drafted from what you actually did. Copy, paste into Slack, done — no memory required.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">💬</div>
+          <h3>Ask your day</h3>
+          <p>"When did I get distracted?" "How long was I in meetings?" Chat with your timeline like it's a colleague with perfect recall.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">📊</div>
+          <h3>Focus stats</h3>
+          <p>Tracked time, focused time, longest deep-work streak, and a per-category breakdown for every day.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🔌</div>
+          <h3>Your choice of AI</h3>
+          <p>Gemini (free tier), Claude, any OpenAI-compatible endpoint — or Ollama on your own hardware for a fully offline setup.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy" class="alt">
+    <div class="wrap privacy-band">
+      <div>
+        <p class="kicker">Privacy</p>
+        <h2 class="title">Your screen is sensitive.<br />We built like it.</h2>
+        <p class="section-sub" style="margin-bottom:0">
+          A tool that watches your screen has to earn trust. DearDiary's answer is simple:
+          your data never belongs to us, because we never have it.
+        </p>
+      </div>
+      <ul>
+        <li><strong>100% local storage.</strong> Screenshots, timeline, and summaries live only on your PC — there is no DearDiary cloud.</li>
+        <li><strong>Nothing recorded without consent.</strong> Recording starts only after you finish first-run setup, and pauses from the tray any time.</li>
+        <li><strong>Screenshots self-destruct.</strong> Raw images are deleted after 7 days (configurable). The written journal is yours forever.</li>
+        <li><strong>Bring your own AI.</strong> Frames go only to the provider you configure — or to a local model via Ollama, so nothing leaves your machine at all.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap center">
+      <p class="kicker">Pricing</p>
+      <h2 class="title">Try free. Then pick how you pay once.</h2>
+      <p class="section-sub">Every plan includes all features, all AI providers, and your data staying yours.</p>
+      <div class="plans" style="text-align:left">
+        <div class="plan">
+          <h3>Trial</h3>
+          <div class="price">$0</div>
+          <p class="tagline">14 days, full features</p>
+          <ul>
+            <li>Everything included</li>
+            <li>No account, no card</li>
+            <li>History stays accessible forever</li>
+          </ul>
+          <a class="btn ghost" href="https://github.com/andrewfowl/deardiary/releases">Download</a>
+        </div>
+        <div class="plan popular">
+          <span class="badge">Most popular</span>
+          <h3>Lifetime</h3>
+          <div class="price">$49 <span>one-time</span></div>
+          <p class="tagline">Pay once, use forever</p>
+          <ul>
+            <li>All features, forever</li>
+            <li>All future updates</li>
+            <li>Use on 2 of your PCs</li>
+            <li>14-day refund guarantee</li>
+          </ul>
+          <!-- Replace href with your Stripe Payment Link (one-time price) -->
+          <a class="btn" href="https://buy.stripe.com/REPLACE_LIFETIME">Buy Lifetime</a>
+        </div>
+        <div class="plan">
+          <h3>Annual</h3>
+          <div class="price">$19 <span>/ year</span></div>
+          <p class="tagline">Lower upfront, cancel anytime</p>
+          <ul>
+            <li>All features while active</li>
+            <li>All updates while active</li>
+            <li>Use on 2 of your PCs</li>
+            <li>History stays yours if you cancel</li>
+          </ul>
+          <!-- Replace href with your Stripe Payment Link (yearly subscription) -->
+          <a class="btn ghost" href="https://buy.stripe.com/REPLACE_ANNUAL">Subscribe</a>
+        </div>
+      </div>
+      <p class="fineprint" style="margin-top:26px; color: var(--text-dim); font-size: 13.5px;">
+        After checkout you'll get a license key instantly — paste it into the app under
+        Settings → License. AI provider usage (e.g. Gemini/Claude API) is billed by the provider; Gemini's free tier and Ollama cost nothing.
+      </p>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <div class="center">
+        <p class="kicker">FAQ</p>
+        <h2 class="title">Questions, answered</h2>
+        <p class="section-sub" style="margin-left:auto;margin-right:auto">The things everyone asks before letting an app watch their screen.</p>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Where does my data go?</summary>
+          <p>Nowhere, by default. Screenshots and your journal database are stored in your Windows user profile. The only network traffic is to the AI provider you configure — and if that's Ollama running locally, there is none at all.</p>
+        </details>
+        <details>
+          <summary>Do I need to pay for an AI provider too?</summary>
+          <p>Usually not. Google Gemini's free tier comfortably covers typical daily usage, and Ollama is free. If you prefer Claude or OpenAI, you bring your own API key and pay them directly (typically cents per day).</p>
+        </details>
+        <details>
+          <summary>What happens when my trial or annual license ends?</summary>
+          <p>Recording and analysis pause — that's all. Every day you already recorded stays fully browsable, summarizable history. We don't hold your own data hostage.</p>
+        </details>
+        <details>
+          <summary>Can I pause it for sensitive work?</summary>
+          <p>Yes — one click on the tray icon. Capture also stops automatically when your screen locks or you go idle.</p>
+        </details>
+        <details>
+          <summary>Lifetime vs annual — what's the difference?</summary>
+          <p>Features are identical. Lifetime is a single $49 purchase that never expires. Annual is $19/year and keeps working while the subscription is active. Both cover two of your own PCs.</p>
+        </details>
+        <details>
+          <summary>Is there a Mac version?</summary>
+          <p>DearDiary is Windows-first. On macOS, check out Dayflow, the open-source app that inspired us.</p>
+        </details>
+        <details>
+          <summary>Refunds?</summary>
+          <p>14 days, no questions asked — email support@deardiary.app.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <a class="logo" href="/" style="margin-bottom:8px"><img src="assets/icon.png" alt="" />DearDiary</a>
+      <div>Your workday, written down for you.</div>
+      <div style="margin-top:10px">© 2026 DearDiary · MIT-licensed app</div>
+    </div>
+    <div>
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="https://github.com/andrewfowl/deardiary/releases">Download</a></li>
+        <li><a href="activate.html">Retrieve license key</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Docs</h4>
+      <ul>
+        <li><a href="docs/">Getting started</a></li>
+        <li><a href="docs/providers.html">AI providers</a></li>
+        <li><a href="docs/privacy.html">Privacy &amp; data</a></li>
+        <li><a href="docs/licensing.html">Licensing</a></li>
+        <li><a href="docs/troubleshooting.html">Troubleshooting</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:support@deardiary.app">support@deardiary.app</a></li>
+        <li><a href="https://github.com/andrewfowl/deardiary">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

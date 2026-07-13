@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI providers — DearDiary Docs</title>
+  <link rel="icon" href="../assets/icon.png" />
+  <link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="../"><img src="../assets/icon.png" alt="" />DearDiary</a>
+    <a class="link" href="../#pricing">Pricing</a>
+    <a class="link" href="./">Docs</a>
+    <a class="btn" href="https://github.com/andrewfowl/deardiary/releases">Download</a>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <nav class="docs-nav">
+    <h4>Documentation</h4>
+    <ul>
+      <li><a href="./">Getting started</a></li>
+      <li><a href="providers.html" class="active">AI providers</a></li>
+      <li><a href="privacy.html">Privacy &amp; data</a></li>
+      <li><a href="licensing.html">Licensing</a></li>
+      <li><a href="troubleshooting.html">Troubleshooting</a></li>
+    </ul>
+  </nav>
+
+  <article class="docs-body">
+    <h1>AI providers</h1>
+    <p class="lead">DearDiary doesn't run its own cloud. Your screenshots go to exactly one place: the AI provider you configure. Pick by budget and privacy preference.</p>
+
+    <table>
+      <tr><th>Provider</th><th>Cost</th><th>Best for</th></tr>
+      <tr><td>Google Gemini</td><td>Free tier covers typical use</td><td>Easiest start</td></tr>
+      <tr><td>Anthropic Claude</td><td>API usage (cents/day)</td><td>Best summaries &amp; chat</td></tr>
+      <tr><td>OpenAI / compatible</td><td>API usage</td><td>Existing OpenAI users, LM Studio</td></tr>
+      <tr><td>Ollama</td><td>Free</td><td>Fully offline privacy</td></tr>
+    </table>
+
+    <h2 id="gemini">Google Gemini (recommended start)</h2>
+    <ol>
+      <li>Visit <a href="https://aistudio.google.com/apikey">Google AI Studio</a> and create a free API key.</li>
+      <li>In DearDiary: <strong>Settings → AI provider → Google Gemini</strong>, paste the key.</li>
+      <li>Click <strong>Save &amp; test connection</strong>.</li>
+    </ol>
+    <p>Default model: <code>gemini-2.5-flash</code> — fast, vision-capable, and generous on the free tier.</p>
+
+    <h2 id="anthropic">Anthropic Claude</h2>
+    <ol>
+      <li>Create an API key in the <a href="https://console.anthropic.com/">Anthropic Console</a>.</li>
+      <li>Select <strong>Anthropic Claude</strong> in Settings and paste the key (<code>sk-ant-…</code>).</li>
+    </ol>
+    <p>DearDiary uses structured outputs with Claude, which makes timeline extraction especially reliable. Analysis costs are typically a few cents per working day.</p>
+
+    <h2 id="openai">OpenAI or any compatible endpoint</h2>
+    <ol>
+      <li>Select <strong>OpenAI (or compatible)</strong> in Settings.</li>
+      <li>Paste your key, and adjust the <em>Base URL</em> if you're using a compatible server (LM Studio: <code>http://localhost:1234/v1</code>).</li>
+      <li>Pick a <strong>vision-capable</strong> model (e.g. <code>gpt-4o-mini</code>).</li>
+    </ol>
+
+    <h2 id="ollama">Ollama — fully offline</h2>
+    <ol>
+      <li>Install <a href="https://ollama.com">Ollama</a> for Windows.</li>
+      <li>Pull a vision model: <pre><code>ollama pull qwen2.5vl</code></pre></li>
+      <li>Select <strong>Ollama (local)</strong> in Settings. Default URL <code>http://localhost:11434/v1</code>.</li>
+    </ol>
+    <div class="callout">
+      With Ollama, screenshots never leave your machine — the complete privacy option. A GPU
+      with ≥8 GB VRAM makes analysis comfortably fast; smaller machines work with more patience.
+    </div>
+
+    <h2>Switching providers</h2>
+    <p>Change any time in Settings — it only affects future analysis batches. Your existing timeline is already stored as text and stays untouched.</p>
+  </article>
+</div>
+
+</body>
+</html>

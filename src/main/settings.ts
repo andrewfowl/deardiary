@@ -18,7 +18,10 @@ export const DEFAULT_SETTINGS: Settings = {
   idleThresholdSec: 180,
   retentionDays: 7,
   captureAllScreens: false,
-  paused: false
+  paused: false,
+  onboarded: false,
+  licenseKey: '',
+  trialStartTs: 0
 }
 
 /** JSON-file-backed settings store kept in the app's userData directory. */

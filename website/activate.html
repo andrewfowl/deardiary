@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your DearDiary license key</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="assets/icon.png" />
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="/"><img src="assets/icon.png" alt="" />DearDiary</a>
+    <a class="link" href="docs/">Docs</a>
+  </div>
+</header>
+
+<main>
+  <div class="activate-card">
+    <h1 id="title">Fetching your license…</h1>
+    <p id="message" style="color:var(--text-dim)">
+      Thanks for your purchase! We're generating your key — this usually takes a few seconds.
+    </p>
+    <div class="license-key" id="key" style="display:none"></div>
+    <button class="btn" id="copy" style="display:none; border: none; cursor: pointer;">Copy key</button>
+    <div id="steps" style="display:none; text-align:left; color:var(--text-dim); margin-top:24px">
+      <strong style="color:var(--text)">To activate:</strong>
+      <ol>
+        <li>Open DearDiary</li>
+        <li>Go to <strong>Settings → License</strong></li>
+        <li>Paste the key and click <strong>Activate</strong></li>
+      </ol>
+      <p>Keep this key safe — you'll need it if you reinstall. Lost keys can be recovered via
+      <a href="mailto:support@deardiary.app">support@deardiary.app</a>.</p>
+    </div>
+  </div>
+</main>
+
+<script>
+  // Set this to your deployed licensing worker (see server/README.md).
+  const LICENSE_API = 'https://license.deardiary.app'
+
+  const params = new URLSearchParams(location.search)
+  const sessionId = params.get('session_id')
+  const $ = (id) => document.getElementById(id)
+
+  async function poll(attempt = 0) {
+    if (!sessionId) {
+      $('title').textContent = 'Missing checkout session'
+      $('message').textContent =
+        'This page needs the session_id from a completed checkout. If you arrived here from a receipt, contact support and we will resend your key.'
+      return
+    }
+    try {
+      const res = await fetch(`${LICENSE_API}/license?session_id=${encodeURIComponent(sessionId)}`)
+      if (res.ok) {
+        const { key, email, plan } = await res.json()
+        $('title').textContent = plan === 'lifetime' ? 'Lifetime license ready 🎉' : 'Annual license ready 🎉'
+        $('message').innerHTML = `Licensed to <strong style="color:var(--text)">${email}</strong>. Here is your key:`
+        $('key').textContent = key
+        $('key').style.display = 'block'
+        $('copy').style.display = 'inline-block'
+        $('steps').style.display = 'block'
+        $('copy').onclick = async () => {
+          await navigator.clipboard.writeText(key)
+          $('copy').textContent = 'Copied ✓'
+          setTimeout(() => ($('copy').textContent = 'Copy key'), 1500)
+        }
+        return
+      }
+    } catch (_) {
+      /* network hiccup — retry below */
+    }
+    if (attempt < 20) {
+      setTimeout(() => poll(attempt + 1), 3000)
+    } else {
+      $('title').textContent = 'Taking longer than expected'
+      $('message').innerHTML =
+        'Your payment went through, but the key isn\'t ready yet. Refresh this page in a minute, or email <a href="mailto:support@deardiary.app">support@deardiary.app</a> with your receipt and we\'ll send it right over.'
+    }
+  }
+  poll()
+</script>
+
+</body>
+</html>

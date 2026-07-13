@@ -4,6 +4,16 @@
 
 DearDiary quietly records what you do on your computer and uses AI to turn it into a readable timeline of your day. No timers, no manual tagging. Then it helps you *use* that record: daily journal summaries, instant standup updates, and a chat interface for asking questions about your own day.
 
+This repository contains the full product:
+
+| Directory | What it is |
+|---|---|
+| `src/` | The Electron + React desktop app |
+| `website/` | Static marketing site + docs + post-checkout activation page |
+| `server/` | Licensing service (Cloudflare Worker + Stripe webhooks) |
+| `scripts/` | Icon generation, license keygen, manual license issuance |
+| `docs/` | Internal docs, including the [user journey audit](docs/user-journey-audit.md) |
+
 ## Features
 
 - **Automatic recording** — a screenshot of your screen every 30 seconds (configurable). Capture pauses automatically when you're idle or your screen is locked, and can be paused any time from the tray.
@@ -28,7 +38,22 @@ DearDiary quietly records what you do on your computer and uses AI to turn it in
 | **OpenAI / compatible** | Any OpenAI-compatible endpoint with a vision model |
 | **Ollama** | Fully local/offline (needs a vision model, e.g. `qwen2.5vl`) |
 
-Configure the provider and API key in **Settings**, then hit *Save & test connection*.
+Configure the provider and API key in **Settings** (or during first-run onboarding), then hit *Save & test connection*.
+
+## Licensing
+
+The app ships with a 14-day full-featured trial (no account), then requires a license:
+
+- **Lifetime** — $49 one-time
+- **Annual** — $19/year subscription
+
+Keys are Ed25519-signed (`DDRY-…`) and **verified offline** by the app against the public key in `src/main/license.ts`. When a trial/license expires, recording pauses but all recorded history stays accessible. The purchase flow (Stripe → webhook → key issuance → activation page) lives in [`server/`](server/README.md); manual issuance is `node scripts/issue-license.mjs --email x@y.com --plan lifetime`.
+
+> ⚠️ The repo contains a **development keypair** (`server/dev-keys/`) so the flow works out of the box. Generate a production keypair with `node scripts/license-keygen.mjs` and replace both halves before selling anything.
+
+## Website & docs
+
+`website/` is a dependency-free static site — landing page with pricing, user docs (`website/docs/`), and the post-checkout key retrieval page (`activate.html`). Deploy it anywhere static (GitHub Pages, Cloudflare Pages); replace the Stripe Payment Link placeholders in `index.html` and the worker URL in `activate.html`.
 
 ## Getting started (development)
 

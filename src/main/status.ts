@@ -13,7 +13,8 @@ export class StatusBus {
     lastBatchTs: null,
     analyzing: false,
     lastError: null,
-    providerConfigured: false
+    providerConfigured: false,
+    license: null
   }
 
   private window: BrowserWindow | null = null

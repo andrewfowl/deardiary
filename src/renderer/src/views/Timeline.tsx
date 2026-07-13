@@ -98,7 +98,9 @@ function Card({ card }: { card: TimelineCard }): React.JSX.Element {
           <span className="chip" style={{ borderColor: info.color, color: info.color }}>
             {info.label}
           </span>
-          {card.distraction && <span className="chip distraction">distraction</span>}
+          {card.distraction && card.category !== 'distraction' && (
+            <span className="chip distraction">distraction</span>
+          )}
         </div>
         <p className="card-summary">{card.summary}</p>
       </div>

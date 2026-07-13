@@ -1,0 +1,15 @@
+# Copy to wrangler.toml and fill in your values, then `npx wrangler deploy`.
+name = "deardiary-licensing"
+main = "worker.mjs"
+compatibility_date = "2026-07-01"
+
+[[kv_namespaces]]
+binding = "LICENSES"
+id = "YOUR_KV_NAMESPACE_ID"
+
+[vars]
+ALLOWED_ORIGIN = "https://deardiary.app"
+
+# Secrets — set with `npx wrangler secret put <NAME>`:
+#   STRIPE_WEBHOOK_SECRET     whsec_… from the Stripe webhook endpoint
+#   LICENSE_PRIVATE_KEY_PEM   contents of your production license-private.pem

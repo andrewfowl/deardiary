@@ -29,6 +29,8 @@ export class AnalysisPipeline {
   constructor(
     private db: JournalDb,
     private settings: SettingsStore,
+    /** Entitlement gate — false while the trial/license has expired. */
+    private isAllowed: () => boolean,
     private onUpdate: (patch: {
       analyzing?: boolean
       lastBatchTs?: number
@@ -64,6 +66,7 @@ export class AnalysisPipeline {
     const s = this.settings.get()
     this.onUpdate({ pendingScreenshots: this.db.countUnanalyzed() })
     if (!isProviderConfigured(s)) return
+    if (!this.isAllowed()) return
 
     // Only consider screenshots that are at least a few seconds old so we
     // never race an in-progress capture.

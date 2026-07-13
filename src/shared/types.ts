@@ -52,6 +52,20 @@ export interface DayData {
 
 export type ProviderId = 'gemini' | 'anthropic' | 'openai' | 'ollama'
 
+export type LicensePlan = 'lifetime' | 'annual'
+
+export type LicenseState = 'trial' | 'trial_expired' | 'licensed' | 'license_expired'
+
+export interface LicenseStatus {
+  state: LicenseState
+  plan: LicensePlan | null
+  email: string | null
+  /** Epoch ms; null for lifetime/trial. */
+  expiresAt: number | null
+  trialDaysLeft: number
+  trialEndsAt: number
+}
+
 export interface Settings {
   provider: ProviderId
   geminiApiKey: string
@@ -75,6 +89,12 @@ export interface Settings {
   captureAllScreens: boolean
   /** Recording paused by the user. */
   paused: boolean
+  /** First-run onboarding completed; capture only starts once true. */
+  onboarded: boolean
+  /** Stored license key ('' when unlicensed / on trial). */
+  licenseKey: string
+  /** Epoch ms when the free trial started (set on first launch). */
+  trialStartTs: number
 }
 
 export interface CaptureStatus {
@@ -88,6 +108,7 @@ export interface CaptureStatus {
   analyzing: boolean
   lastError: string | null
   providerConfigured: boolean
+  license: LicenseStatus | null
 }
 
 export interface ChatMessage {
@@ -109,5 +130,8 @@ export interface DearDiaryApi {
   setPaused(paused: boolean): Promise<void>
   getStatus(): Promise<CaptureStatus>
   analyzeNow(): Promise<void>
+  getLicense(): Promise<LicenseStatus>
+  activateLicense(key: string): Promise<{ ok: boolean; message: string }>
+  openExternal(url: string): Promise<void>
   onStatus(cb: (status: CaptureStatus) => void): () => void
 }

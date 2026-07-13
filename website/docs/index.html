@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Getting started — DearDiary Docs</title>
+  <link rel="icon" href="../assets/icon.png" />
+  <link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="../"><img src="../assets/icon.png" alt="" />DearDiary</a>
+    <a class="link" href="../#pricing">Pricing</a>
+    <a class="link" href="./">Docs</a>
+    <a class="btn" href="https://github.com/andrewfowl/deardiary/releases">Download</a>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <nav class="docs-nav">
+    <h4>Documentation</h4>
+    <ul>
+      <li><a href="./" class="active">Getting started</a></li>
+      <li><a href="providers.html">AI providers</a></li>
+      <li><a href="privacy.html">Privacy &amp; data</a></li>
+      <li><a href="licensing.html">Licensing</a></li>
+      <li><a href="troubleshooting.html">Troubleshooting</a></li>
+    </ul>
+  </nav>
+
+  <article class="docs-body">
+    <h1>Getting started</h1>
+    <p class="lead">From install to your first AI-written timeline in about 20 minutes — most of which is DearDiary quietly doing its job.</p>
+
+    <h2>Requirements</h2>
+    <ul>
+      <li>Windows 10 or 11 (64-bit)</li>
+      <li>An AI provider: a free <a href="providers.html#gemini">Google Gemini</a> key is the fastest start; <a href="providers.html#ollama">Ollama</a> works fully offline</li>
+    </ul>
+
+    <h2>Install</h2>
+    <ol>
+      <li>Download the installer from the <a href="https://github.com/andrewfowl/deardiary/releases">releases page</a>.</li>
+      <li>Run it. DearDiary starts automatically and opens the setup wizard.</li>
+    </ol>
+
+    <h2>First-run setup</h2>
+    <p>Nothing is recorded until you finish the three-step wizard:</p>
+    <ol>
+      <li><strong>Welcome &amp; privacy</strong> — what DearDiary records and where it's stored (spoiler: only on your PC).</li>
+      <li><strong>Choose your AI</strong> — pick a provider, paste its key, and click <em>Test connection</em>. You can skip this and do it later in Settings, but no timeline is generated until a provider works.</li>
+      <li><strong>How recording works</strong> — capture cadence and tray behavior. Click <em>Start recording</em> and you're done.</li>
+    </ol>
+
+    <h2>Your first timeline</h2>
+    <p>DearDiary takes a screenshot of your primary display every 30 seconds while you're active, and analyzes them in ~15-minute batches. So:</p>
+    <ul>
+      <li>The status footer (bottom-left) shows <em>Recording</em> and a count of screenshots pending analysis.</li>
+      <li>After about 15 minutes the first <strong>timeline cards</strong> appear. Impatient? Click <strong>Analyze now</strong> in the status footer.</li>
+    </ul>
+
+    <h2>The five views</h2>
+    <table>
+      <tr><th>View</th><th>What it's for</th></tr>
+      <tr><td><strong>Timeline</strong></td><td>Your day as cards — what, when, how long, categorized, distractions flagged.</td></tr>
+      <tr><td><strong>Journal</strong></td><td>Focus stats, category breakdown, and a one-click AI-written entry for the day.</td></tr>
+      <tr><td><strong>Ask your day</strong></td><td>Chat over the selected day's timeline: "What was I doing at 3pm?"</td></tr>
+      <tr><td><strong>Standup</strong></td><td>Yesterday / Today / Blockers drafted from your actual activity. Copy or polish with AI.</td></tr>
+      <tr><td><strong>Settings</strong></td><td>Provider, recording cadence, retention, and your license.</td></tr>
+    </table>
+
+    <h2>Living in the tray</h2>
+    <ul>
+      <li>Closing the window keeps DearDiary recording in the system tray.</li>
+      <li>Right-click the tray icon to <strong>pause/resume</strong> recording or quit entirely.</li>
+      <li>Capture pauses automatically when your screen locks or you go idle for 3 minutes (configurable).</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Tip:</strong> give it a normal workday before judging the output. The timeline gets dramatically more useful once there's a full day to summarize, ask about, and turn into a standup.
+    </div>
+  </article>
+</div>
+
+</body>
+</html>

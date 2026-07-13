@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Licensing — DearDiary Docs</title>
+  <link rel="icon" href="../assets/icon.png" />
+  <link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="../"><img src="../assets/icon.png" alt="" />DearDiary</a>
+    <a class="link" href="../#pricing">Pricing</a>
+    <a class="link" href="./">Docs</a>
+    <a class="btn" href="https://github.com/andrewfowl/deardiary/releases">Download</a>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <nav class="docs-nav">
+    <h4>Documentation</h4>
+    <ul>
+      <li><a href="./">Getting started</a></li>
+      <li><a href="providers.html">AI providers</a></li>
+      <li><a href="privacy.html">Privacy &amp; data</a></li>
+      <li><a href="licensing.html" class="active">Licensing</a></li>
+      <li><a href="troubleshooting.html">Troubleshooting</a></li>
+    </ul>
+  </nav>
+
+  <article class="docs-body">
+    <h1>Licensing</h1>
+    <p class="lead">A 14-day free trial, then one license — bought once or renewed yearly. Keys activate offline, and your history is never locked behind payment.</p>
+
+    <h2>The trial</h2>
+    <p>Starts on first launch. Full features, no account, no card. The sidebar shows days remaining during the final week. When it ends, <strong>recording and analysis pause — everything you recorded stays fully browsable.</strong></p>
+
+    <h2>Plans</h2>
+    <table>
+      <tr><th></th><th>Lifetime</th><th>Annual</th></tr>
+      <tr><td>Price</td><td>$49 one-time</td><td>$19 / year</td></tr>
+      <tr><td>Features</td><td colspan="2">Identical — everything included</td></tr>
+      <tr><td>Updates</td><td>Forever</td><td>While active</td></tr>
+      <tr><td>Devices</td><td colspan="2">2 of your own PCs</td></tr>
+      <tr><td>Expiry</td><td>Never</td><td>366 days per key; renewal issues a fresh key</td></tr>
+    </table>
+
+    <h2>Buying &amp; activating</h2>
+    <ol>
+      <li>Purchase on the <a href="../#pricing">pricing page</a>. Checkout is handled by Stripe.</li>
+      <li>Right after checkout you land on a page showing your license key (<code>DDRY-…</code>). It's also retrievable any time with your checkout receipt.</li>
+      <li>In DearDiary: <strong>Settings → License</strong>, paste the key, click <strong>Activate</strong>.</li>
+    </ol>
+    <p>Activation is <strong>offline</strong> — the key is a cryptographically signed statement of your purchase, verified locally. No license server needs to be reachable for the app to run.</p>
+
+    <h2>Annual renewals</h2>
+    <p>Each annual key is valid for 366 days. When your subscription renews, a fresh key is issued — check your renewal receipt, or write to support. The app shows a renewal reminder during the last two weeks.</p>
+
+    <h2>Moving to a new PC</h2>
+    <p>Install DearDiary and paste the same key. Licenses cover two of your own machines. Your journal itself can be moved by copying <code>%APPDATA%\DearDiary\deardiary.db</code>.</p>
+
+    <h2>Lost keys &amp; refunds</h2>
+    <ul>
+      <li>Lost key: email <a href="mailto:support@deardiary.app">support@deardiary.app</a> from your purchase address.</li>
+      <li>Refunds: 14 days, no questions asked.</li>
+    </ul>
+
+    <h2>For self-hosters</h2>
+    <p>The app is MIT-licensed and the entire licensing stack is in the repo (<code>server/</code> — a small Cloudflare Worker + Stripe webhooks, and <code>scripts/issue-license.mjs</code> for manual issuance). Selling it as your own product requires generating your own signing keypair; see <code>server/README.md</code>.</p>
+  </article>
+</div>
+
+</body>
+</html>

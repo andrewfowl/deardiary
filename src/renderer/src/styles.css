@@ -585,3 +585,163 @@ textarea:focus {
   grid-template-columns: 1fr 1fr;
   gap: 0 20px;
 }
+
+/* --- design polish (journey audit) --- */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+  border: 2px solid var(--bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-dim);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.nav-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.row.gap-sm {
+  gap: 8px;
+}
+
+.linklike {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+}
+
+.chip.ok-chip {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+/* --- license banner --- */
+
+.license-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(124, 156, 245, 0.1);
+  border-bottom: 1px solid rgba(124, 156, 245, 0.35);
+  padding: 10px 24px;
+  font-size: 13px;
+}
+
+/* --- onboarding --- */
+
+.onboarding {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(1200px 500px at 20% -10%, rgba(124, 156, 245, 0.12), transparent),
+    var(--bg);
+}
+
+.onboarding-card {
+  width: 620px;
+  max-width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 36px;
+}
+
+.onboarding-card h1 {
+  margin: 0 0 10px;
+  font-size: 24px;
+}
+
+.lead {
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+
+.onboarding-progress {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 22px;
+}
+
+.progress-dot {
+  width: 26px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+}
+
+.progress-dot.done {
+  background: var(--accent);
+}
+
+.onboarding-points {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 6px 0 10px;
+}
+
+.point {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.point svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+.point strong {
+  color: var(--text);
+}
+
+.onboarding-list {
+  color: var(--text-dim);
+  line-height: 1.8;
+  padding-left: 20px;
+  margin: 0 0 16px;
+}
+
+.onboarding-list strong {
+  color: var(--text);
+}
+
+.onboarding-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}

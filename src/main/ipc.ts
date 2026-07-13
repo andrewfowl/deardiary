@@ -1,9 +1,10 @@
-import { ipcMain } from 'electron'
+import { ipcMain, shell } from 'electron'
 import type { JournalDb } from './db'
 import type { SettingsStore } from './settings'
 import type { AnalysisPipeline } from './pipeline'
 import type { StatusBus } from './status'
 import { createProvider, isProviderConfigured } from './ai/provider'
+import { evaluateLicense, parseLicenseKey } from './license'
 import {
   buildChatSystemPrompt,
   buildStandupPolishPrompt,
@@ -117,6 +118,44 @@ export function registerIpc(
   ipcMain.handle('status:get', () => status.get())
 
   ipcMain.handle('pipeline:runNow', () => pipeline.runNow())
+
+  ipcMain.handle('shell:open', (_e, url: string) => {
+    if (typeof url === 'string' && /^https:\/\//.test(url)) {
+      void shell.openExternal(url)
+    }
+  })
+
+  ipcMain.handle('license:get', () => {
+    const s = settings.get()
+    return evaluateLicense(s.licenseKey || null, s.trialStartTs)
+  })
+
+  ipcMain.handle('license:activate', (_e, key: string) => {
+    const trimmed = typeof key === 'string' ? key.trim() : ''
+    const payload = parseLicenseKey(trimmed)
+    if (!payload) {
+      return {
+        ok: false,
+        message: 'That key is not valid. Check for missing characters and try again.'
+      }
+    }
+    const s = settings.update({ licenseKey: trimmed })
+    const license = evaluateLicense(s.licenseKey, s.trialStartTs)
+    status.update({ license })
+    if (license.state === 'license_expired') {
+      return {
+        ok: false,
+        message: `This annual license expired on ${new Date(license.expiresAt ?? 0).toLocaleDateString()}. Renew to keep recording.`
+      }
+    }
+    return {
+      ok: true,
+      message:
+        payload.plan === 'lifetime'
+          ? `Lifetime license activated for ${payload.email}. Thank you!`
+          : `Annual license activated for ${payload.email} (renews ${new Date(payload.exp ?? 0).toLocaleDateString()}).`
+    }
+  })
 }
 
 function requireDay(day: string): void {
