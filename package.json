@@ -38,7 +38,12 @@
           ]
         }
       ],
-      "icon": "resources/icon.png"
+      "icon": "resources/icon.png",
+      "artifactName": "DearDiary-Setup-${version}.${ext}"
+    },
+    "publish": {
+      "provider": "generic",
+      "url": "https://dl.deardiary.app"
     },
     "nsis": {
       "oneClick": true,

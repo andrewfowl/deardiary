@@ -3,7 +3,6 @@ name: CI
 on:
   push:
     branches: ['main', 'claude/**']
-    tags: ['v*']
   pull_request:
   workflow_dispatch:
 
@@ -24,24 +23,5 @@ jobs:
       - run: npm test
       - run: npm run build
 
-  windows-installer:
-    # Build the NSIS installer on tags and manual runs.
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
-    needs: test
-    runs-on: windows-latest
-    env:
-      ELECTRON_SKIP_BINARY_DOWNLOAD: '0'
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run dist:win
-      - uses: actions/upload-artifact@v4
-        with:
-          name: DearDiary-windows-installer
-          path: |
-            dist/*.exe
-            dist/*.blockmap
+# Installer builds and publishing to the website download channel live in
+# release.yml (triggered by v* tags); website deploys in deploy-website.yml.

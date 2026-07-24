@@ -66,13 +66,15 @@ npm test           # unit tests (vitest)
 npm run typecheck  # tsc --noEmit
 ```
 
-Build a Windows installer:
+Build a Windows installer locally:
 
 ```bash
 npm run dist:win   # NSIS installer in dist/
 ```
 
-Or trigger the **windows-installer** job in GitHub Actions (runs on tags `v*` and manual dispatch).
+## Releasing & distribution
+
+Downloads are distributed from **the website** (`deardiary.app/download.html`), not GitHub Releases: tagging `v*` runs `.github/workflows/release.yml`, which builds the installer on Windows (code-signed when Azure Trusted Signing secrets are configured), refuses to ship a build that still trusts the committed dev license key, and publishes the versioned installer + stable-URL alias + `latest.json`/`latest.yml` to the download bucket. The website deploys via `.github/workflows/deploy-website.yml`. Full runbook — key rotation, hosting, signing, Stripe: [RELEASING.md](RELEASING.md).
 
 ## How it works
 

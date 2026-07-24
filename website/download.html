@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Download DearDiary for Windows</title>
+  <link rel="icon" href="assets/icon.png" />
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="/"><img src="assets/icon.png" alt="" />DearDiary</a>
+    <a class="link" href="/#pricing">Pricing</a>
+    <a class="link" href="docs/">Docs</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page">
+    <article class="docs-body">
+      <h1>Download DearDiary</h1>
+      <p class="lead">For Windows 10 and 11 (64-bit). Full-featured 14-day trial — no account, no card, nothing recorded until you say so.</p>
+
+      <p style="margin: 26px 0 8px">
+        <a class="btn big" id="dl" href="https://dl.deardiary.app/DearDiary-Setup.exe">Download DearDiary for Windows</a>
+      </p>
+      <p id="meta" style="font-family: var(--sans); font-size: 13px; color: var(--faint);">
+        DearDiary-Setup.exe
+      </p>
+      <p class="checksum" id="checksum" hidden></p>
+
+      <h2>First run, in three steps</h2>
+      <ol>
+        <li>Run the installer — DearDiary opens with a short setup wizard.</li>
+        <li>Pick an AI provider (a free <a href="docs/providers.html#gemini">Gemini key</a> is the fastest start; <a href="docs/providers.html#ollama">Ollama</a> keeps everything offline).</li>
+        <li>Click <strong>Start recording</strong>. Your first timeline appears within ~15 minutes.</li>
+      </ol>
+
+      <div class="callout warn">
+        <strong>If Windows SmartScreen appears:</strong> new releases can show
+        "Windows protected your PC" until the build accumulates reputation.
+        Click <em>More info → Run anyway</em>, and verify the SHA-256 checksum
+        above matches the file you downloaded if you want certainty.
+      </div>
+
+      <h2>Good to know</h2>
+      <ul>
+        <li>Everything DearDiary records stays on your PC — see <a href="docs/privacy.html">privacy &amp; data</a>.</li>
+        <li>The trial is the full product for 14 days; <a href="/#pricing">pricing</a> is $49 once or $19/year after.</li>
+        <li>Stuck? The <a href="docs/troubleshooting.html">troubleshooting guide</a> covers the common first-day questions.</li>
+      </ul>
+    </article>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap colophon">
+    <span><strong>DearDiary</strong> — the work journal that writes itself.</span>
+    <a href="docs/">Docs</a>
+    <a href="legal/terms.html">Terms</a>
+    <a href="legal/privacy.html">Privacy</a>
+    <a href="legal/refunds.html">Refunds</a>
+    <a href="mailto:support@deardiary.app">support@deardiary.app</a>
+  </div>
+</footer>
+
+<script>
+  // The release pipeline publishes latest.json next to the installer.
+  const DL_BASE = 'https://dl.deardiary.app'
+  fetch(`${DL_BASE}/latest.json`)
+    .then((r) => (r.ok ? r.json() : null))
+    .then((info) => {
+      if (!info) return
+      const mb = (info.size / 1048576).toFixed(0)
+      document.getElementById('meta').textContent =
+        `Version ${info.version} · ${mb} MB · released ${new Date(info.date).toLocaleDateString()}`
+      const sum = document.getElementById('checksum')
+      sum.hidden = false
+      sum.textContent = `SHA-256: ${info.sha256}`
+      document.getElementById('dl').href = info.url
+    })
+    .catch(() => {})
+</script>
+
+</body>
+</html>

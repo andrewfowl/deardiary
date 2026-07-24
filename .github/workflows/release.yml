@@ -1,0 +1,122 @@
+name: Release
+
+# Builds the Windows installer and publishes it to the website's download
+# channel (Cloudflare R2 bucket served at https://dl.deardiary.app).
+# Triggered by version tags (v0.2.0) or manually. See RELEASING.md.
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - name: Refuse to release a build that trusts the dev license key
+        env:
+          ALLOW_DEV_LICENSE_KEY: ${{ vars.ALLOW_DEV_LICENSE_KEY }}
+        run: node scripts/check-license-key.mjs
+
+  installer:
+    needs: test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Detect code-signing credentials
+        id: sign
+        shell: bash
+        run: echo "enabled=${{ secrets.AZURE_CLIENT_SECRET != '' }}" >> "$GITHUB_OUTPUT"
+
+      # Signed build — Azure Trusted Signing via electron-builder.
+      # Requires secrets: AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET,
+      # AZURE_SIGNING_ENDPOINT, AZURE_SIGNING_ACCOUNT, AZURE_SIGNING_PROFILE.
+      - name: Build installer (signed)
+        if: steps.sign.outputs.enabled == 'true'
+        shell: bash
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        run: |
+          npx electron-vite build
+          npx electron-builder --win --publish never \
+            --config.win.azureSignOptions.endpoint="${{ secrets.AZURE_SIGNING_ENDPOINT }}" \
+            --config.win.azureSignOptions.codeSigningAccountName="${{ secrets.AZURE_SIGNING_ACCOUNT }}" \
+            --config.win.azureSignOptions.certificateProfileName="${{ secrets.AZURE_SIGNING_PROFILE }}"
+
+      - name: Build installer (UNSIGNED — set AZURE_* secrets to sign)
+        if: steps.sign.outputs.enabled != 'true'
+        run: npm run dist:win
+
+      - name: Collect output
+        shell: bash
+        run: |
+          mkdir upload
+          cp dist/DearDiary-Setup-*.exe upload/
+          cp dist/latest.yml upload/ 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: upload/**
+          if-no-files-found: error
+
+  publish:
+    needs: installer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: windows-installer
+          path: upload
+      - name: Detect Cloudflare credentials
+        id: cf
+        run: echo "enabled=${{ secrets.CLOUDFLARE_API_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
+
+      - name: Build release manifest
+        id: meta
+        run: |
+          FILE=$(basename upload/DearDiary-Setup-*.exe)
+          VERSION=$(echo "$FILE" | sed -E 's/DearDiary-Setup-(.*)\.exe/\1/')
+          SHA=$(sha256sum "upload/$FILE" | cut -d' ' -f1)
+          SIZE=$(stat -c%s "upload/$FILE")
+          printf '{\n  "version": "%s",\n  "file": "%s",\n  "url": "https://dl.deardiary.app/%s",\n  "sha256": "%s",\n  "size": %s,\n  "date": "%s"\n}\n' \
+            "$VERSION" "$FILE" "$FILE" "$SHA" "$SIZE" "$(date -u +%FT%TZ)" > upload/latest.json
+          cp "upload/$FILE" upload/DearDiary-Setup.exe
+          cat upload/latest.json
+          echo "file=$FILE" >> "$GITHUB_OUTPUT"
+
+      # Uploads: versioned installer, stable-URL alias, JSON manifest for the
+      # download page, and electron-builder's latest.yml (future auto-update).
+      - name: Publish to R2 (served at dl.deardiary.app)
+        if: steps.cf.outputs.enabled == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          put() { npx wrangler r2 object put "deardiary-downloads/$1" --file "$2" --content-type "$3" --remote; }
+          put "${{ steps.meta.outputs.file }}" "upload/${{ steps.meta.outputs.file }}" application/octet-stream
+          put "DearDiary-Setup.exe" "upload/DearDiary-Setup.exe" application/octet-stream
+          put "latest.json" "upload/latest.json" application/json
+          if [ -f upload/latest.yml ]; then put "latest.yml" "upload/latest.yml" text/yaml; fi
+
+      - name: Publish skipped (no Cloudflare credentials)
+        if: steps.cf.outputs.enabled != 'true'
+        run: |
+          echo "::warning::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID not set — installer was NOT published."
+          echo "::warning::It is available as the 'windows-installer' workflow artifact. See RELEASING.md for one-time hosting setup."

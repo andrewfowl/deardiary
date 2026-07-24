@@ -799,6 +799,19 @@ footer.site a:hover {
   background: rgba(178, 58, 46, 0.06);
 }
 
+/* --- standalone article pages (download, legal) --- */
+
+.page {
+  padding: 48px 0 100px;
+}
+
+.checksum {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  word-break: break-all;
+  color: var(--ink-soft);
+}
+
 /* ============================================================
    Activation page
    ============================================================ */
