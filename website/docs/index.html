@@ -5,24 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Getting started — DearDiary Docs</title>
   <link rel="icon" href="../assets/icon.png" />
+  <meta name="theme-color" content="#f7f5ef" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" />
   <link rel="stylesheet" href="../assets/site.css" />
 </head>
 <body>
 
+<a class="skip" href="#main">Skip to content</a>
+
 <header class="site">
-  <div class="wrap nav">
-    <a class="logo" href="../"><img src="../assets/icon.png" alt="" />DearDiary</a>
-    <a class="link" href="../#pricing">Pricing</a>
-    <a class="link" href="./">Docs</a>
+  <nav class="wrap nav" aria-label="Main">
+    <a class="logo" href="../"><img src="../assets/icon.png" alt="" width="26" height="26" />DearDiary</a>
+    <ul class="nav-links">
+      <li><a href="../#writes">What it writes</a></li>
+      <li><a href="../#privacy">Privacy</a></li>
+      <li><a href="../#pricing">Pricing</a></li>
+      <li><a href="../docs/" aria-current="page">Docs</a></li>
+    </ul>
     <a class="btn" href="../download.html">Download</a>
-  </div>
+  </nav>
 </header>
 
-<div class="wrap docs">
-  <nav class="docs-nav">
+<main id="main" class="wrap docs">
+  <nav class="docs-nav" aria-label="Documentation">
     <h4>Documentation</h4>
     <ul>
-      <li><a href="./" class="active">Getting started</a></li>
+      <li><a href="./" class="active" aria-current="page">Getting started</a></li>
       <li><a href="providers.html">AI providers</a></li>
       <li><a href="privacy.html">Privacy &amp; data</a></li>
       <li><a href="licensing.html">Licensing</a></li>
@@ -82,7 +92,46 @@
       <strong>Tip:</strong> give it a normal workday before judging the output. The timeline gets dramatically more useful once there's a full day to summarize, ask about, and turn into a standup.
     </div>
   </article>
-</div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="../"><img src="../assets/icon.png" alt="" width="26" height="26" />DearDiary</a>
+        <p>The work journal that writes itself.</p>
+      </div>
+      <div class="foot-col">
+        <h2>Product</h2>
+        <ul>
+          <li><a href="../download.html">Download</a></li>
+          <li><a href="../#pricing">Pricing</a></li>
+          <li><a href="../activate.html">Retrieve a license key</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h2>Help</h2>
+        <ul>
+          <li><a href="../docs/">Docs</a></li>
+          <li><a href="../docs/troubleshooting.html">Troubleshooting</a></li>
+          <li><a href="mailto:support@deardiary.app">support@deardiary.app</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="../legal/terms.html">Terms</a></li>
+          <li><a href="../legal/privacy.html">Privacy</a></li>
+          <li><a href="../legal/refunds.html">Refunds</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 DearDiary · <a href="https://github.com/andrewfowl/deardiary">MIT-licensed on GitHub</a></span>
+      <span>Set in old-style serifs, on purpose.</span>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>

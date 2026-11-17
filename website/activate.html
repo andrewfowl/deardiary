@@ -5,34 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Your DearDiary license key</title>
   <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#f7f5ef" />
   <link rel="icon" href="assets/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" />
   <link rel="stylesheet" href="assets/site.css" />
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
 <header class="site">
-  <div class="wrap nav">
-    <a class="logo" href="/"><img src="assets/icon.png" alt="" />DearDiary</a>
-    <a class="link" href="docs/">Docs</a>
-  </div>
+  <nav class="wrap nav" aria-label="Main">
+    <a class="logo" href="./"><img src="assets/icon.png" alt="" width="26" height="26" />DearDiary</a>
+    <ul class="nav-links">
+      <li><a href="docs/licensing.html">Licensing help</a></li>
+      <li><a href="docs/">Docs</a></li>
+    </ul>
+  </nav>
 </header>
 
-<main>
-  <div class="activate-card">
-    <h1 id="title">Fetching your license…</h1>
-    <p id="message" style="color:var(--text-dim)">
-      Thanks for your purchase! We're generating your key — this usually takes a few seconds.
+<main id="main">
+  <div class="activate-card" aria-live="polite">
+    <p class="label" id="kicker"><span class="spinner" aria-hidden="true"></span>Checkout complete</p>
+    <h1 id="title">Fetching your license&hellip;</h1>
+    <p class="msg" id="message">
+      Thanks for your purchase. We're generating your key; this usually takes a few seconds.
     </p>
-    <div class="license-key" id="key" style="display:none"></div>
-    <button class="btn" id="copy" style="display:none; border: none; cursor: pointer;">Copy key</button>
-    <div id="steps" style="display:none; text-align:left; color:var(--text-dim); margin-top:24px">
-      <strong style="color:var(--text)">To activate:</strong>
+    <div class="license-key" id="key" hidden></div>
+    <button class="btn" id="copy" type="button" hidden>Copy key</button>
+    <div class="activate-steps" id="steps" hidden>
+      <strong>To activate:</strong>
       <ol>
         <li>Open DearDiary</li>
-        <li>Go to <strong>Settings → License</strong></li>
+        <li>Go to <strong>Settings &rarr; License</strong></li>
         <li>Paste the key and click <strong>Activate</strong></li>
       </ol>
-      <p>Keep this key safe — you'll need it if you reinstall. Lost keys can be recovered via
+      <p>Keep this key somewhere safe; you'll need it if you reinstall. Lost keys can be recovered via
       <a href="mailto:support@deardiary.app">support@deardiary.app</a>.</p>
     </div>
   </div>
@@ -46,39 +55,60 @@
   const sessionId = params.get('session_id')
   const $ = (id) => document.getElementById(id)
 
+  function stopSpinner(label) {
+    $('kicker').textContent = label
+  }
+
+  function supportMessage(text) {
+    const msg = $('message')
+    msg.textContent = text + ' '
+    const link = document.createElement('a')
+    link.href = 'mailto:support@deardiary.app'
+    link.textContent = 'support@deardiary.app'
+    msg.append(link, '.')
+  }
+
   async function poll(attempt = 0) {
     if (!sessionId) {
+      stopSpinner('No checkout found')
       $('title').textContent = 'Missing checkout session'
-      $('message').textContent =
-        'This page needs the session_id from a completed checkout. If you arrived here from a receipt, contact support and we will resend your key.'
+      supportMessage(
+        'This page needs the session_id from a completed checkout. If you arrived here from a receipt, email'
+      )
       return
     }
     try {
       const res = await fetch(`${LICENSE_API}/license?session_id=${encodeURIComponent(sessionId)}`)
       if (res.ok) {
         const { key, email, plan } = await res.json()
-        $('title').textContent = plan === 'lifetime' ? 'Lifetime license ready 🎉' : 'Annual license ready 🎉'
-        $('message').innerHTML = `Licensed to <strong style="color:var(--text)">${email}</strong>. Here is your key:`
+        stopSpinner('Payment received')
+        $('title').textContent = plan === 'lifetime' ? 'Your lifetime license is ready' : 'Your annual license is ready'
+        const msg = $('message')
+        const who = document.createElement('strong')
+        who.textContent = email
+        msg.replaceChildren('Licensed to ', who, '. Here is your key:')
         $('key').textContent = key
-        $('key').style.display = 'block'
-        $('copy').style.display = 'inline-block'
-        $('steps').style.display = 'block'
+        $('key').hidden = false
+        $('copy').hidden = false
+        $('steps').hidden = false
         $('copy').onclick = async () => {
           await navigator.clipboard.writeText(key)
-          $('copy').textContent = 'Copied ✓'
+          $('copy').textContent = 'Copied'
           setTimeout(() => ($('copy').textContent = 'Copy key'), 1500)
         }
         return
       }
     } catch (_) {
-      /* network hiccup — retry below */
+      /* network hiccup, retry below */
     }
     if (attempt < 20) {
       setTimeout(() => poll(attempt + 1), 3000)
     } else {
+      stopSpinner('Still working')
       $('title').textContent = 'Taking longer than expected'
-      $('message').innerHTML =
-        'Your payment went through, but the key isn\'t ready yet. Refresh this page in a minute, or email <a href="mailto:support@deardiary.app">support@deardiary.app</a> with your receipt and we\'ll send it right over.'
+      supportMessage(
+        "Your payment went through, but the key isn't ready yet. Refresh this page in a minute, or send your receipt to"
+      )
     }
   }
   poll()

@@ -4,65 +4,133 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Download DearDiary for Windows</title>
+  <meta name="description" content="Download DearDiary for Windows 10 and 11. Full-featured 14-day trial, no account or card, nothing recorded until you say so." />
+  <meta name="theme-color" content="#f7f5ef" />
+  <meta property="og:title" content="Download DearDiary for Windows" />
+  <meta property="og:description" content="A private, AI-written journal of your Windows workday. Free for 14 days." />
+  <meta property="og:image" content="https://deardiary.app/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="assets/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" />
   <link rel="stylesheet" href="assets/site.css" />
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
 <header class="site">
-  <div class="wrap nav">
-    <a class="logo" href="/"><img src="assets/icon.png" alt="" />DearDiary</a>
-    <a class="link" href="/#pricing">Pricing</a>
-    <a class="link" href="docs/">Docs</a>
-  </div>
+  <nav class="wrap nav" aria-label="Main">
+    <a class="logo" href="./"><img src="assets/icon.png" alt="" width="26" height="26" />DearDiary</a>
+    <ul class="nav-links">
+      <li><a href="./#writes">What it writes</a></li>
+      <li><a href="./#privacy">Privacy</a></li>
+      <li><a href="./#pricing">Pricing</a></li>
+      <li><a href="docs/">Docs</a></li>
+    </ul>
+    <a class="btn" href="download.html" aria-current="page">Download</a>
+  </nav>
 </header>
 
-<main>
+<main id="main">
   <div class="wrap page">
-    <article class="docs-body">
-      <h1>Download DearDiary</h1>
-      <p class="lead">For Windows 10 and 11 (64-bit). Full-featured 14-day trial — no account, no card, nothing recorded until you say so.</p>
+    <div class="dl-grid">
+      <article class="docs-body">
+        <p class="label">Download · Windows 10 &amp; 11</p>
+        <h1>Your diary starts here.</h1>
+        <p class="lead">A full-featured 14-day trial. No account, no card, and nothing is recorded until you press Start.</p>
 
-      <p style="margin: 26px 0 8px">
-        <a class="btn big" id="dl" href="https://dl.deardiary.app/DearDiary-Setup.exe">Download DearDiary for Windows</a>
-      </p>
-      <p id="meta" style="font-family: var(--sans); font-size: 13px; color: var(--faint);">
-        DearDiary-Setup.exe
-      </p>
-      <p class="checksum" id="checksum" hidden></p>
+        <h2>First run, in three steps</h2>
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>Run the installer</h3>
+              <p>DearDiary opens with a short setup wizard explaining exactly what it records and where.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Pick an AI provider</h3>
+              <p>A free <a href="docs/providers.html#gemini">Gemini key</a> is the fastest start. <a href="docs/providers.html#ollama">Ollama</a> keeps everything offline.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Press Start recording</h3>
+              <p>Your first timeline appears within about 15 minutes. Then go back to work.</p>
+            </div>
+          </li>
+        </ol>
 
-      <h2>First run, in three steps</h2>
-      <ol>
-        <li>Run the installer — DearDiary opens with a short setup wizard.</li>
-        <li>Pick an AI provider (a free <a href="docs/providers.html#gemini">Gemini key</a> is the fastest start; <a href="docs/providers.html#ollama">Ollama</a> keeps everything offline).</li>
-        <li>Click <strong>Start recording</strong>. Your first timeline appears within ~15 minutes.</li>
-      </ol>
+        <div class="callout warn">
+          <strong>If Windows SmartScreen appears:</strong> new releases can show
+          "Windows protected your PC" until the build earns reputation.
+          Click <em>More info &rarr; Run anyway</em>, and compare the SHA-256
+          checksum against the file you downloaded if you want certainty.
+        </div>
 
-      <div class="callout warn">
-        <strong>If Windows SmartScreen appears:</strong> new releases can show
-        "Windows protected your PC" until the build accumulates reputation.
-        Click <em>More info → Run anyway</em>, and verify the SHA-256 checksum
-        above matches the file you downloaded if you want certainty.
-      </div>
+        <h2>Good to know</h2>
+        <ul>
+          <li>Everything DearDiary records stays on your PC. See <a href="docs/privacy.html">privacy &amp; data</a>.</li>
+          <li>After the trial, it's <a href="./#pricing">$49 once or $19 a year</a>. Your history stays readable either way.</li>
+          <li>Stuck? The <a href="docs/troubleshooting.html">troubleshooting guide</a> covers the common first-day questions.</li>
+        </ul>
+      </article>
 
-      <h2>Good to know</h2>
-      <ul>
-        <li>Everything DearDiary records stays on your PC — see <a href="docs/privacy.html">privacy &amp; data</a>.</li>
-        <li>The trial is the full product for 14 days; <a href="/#pricing">pricing</a> is $49 once or $19/year after.</li>
-        <li>Stuck? The <a href="docs/troubleshooting.html">troubleshooting guide</a> covers the common first-day questions.</li>
-      </ul>
-    </article>
+      <aside class="dl-panel" aria-label="Installer">
+        <a class="btn big" id="dl" href="https://dl.deardiary.app/DearDiary-Setup.exe">
+          <svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M0 2.3 6.5 1.4v6.2H0zM7.3 1.3 16 0v7.6H7.3zM0 8.4h6.5v6.2L0 13.7zM7.3 8.4H16V16l-8.7-1.2z"/></svg>
+          Download for Windows
+        </a>
+        <p class="dl-meta" id="meta">DearDiary-Setup.exe</p>
+        <ul class="spec">
+          <li><span>System</span><b>Windows 10 / 11, 64-bit</b></li>
+          <li><span>Trial</span><b>14 days, full product</b></li>
+          <li><span>Account</span><b>None required</b></li>
+          <li><span>Data</span><b>Stays on this PC</b></li>
+        </ul>
+        <p class="checksum" id="checksum" hidden></p>
+      </aside>
+    </div>
   </div>
 </main>
 
 <footer class="site">
-  <div class="wrap colophon">
-    <span><strong>DearDiary</strong> — the work journal that writes itself.</span>
-    <a href="docs/">Docs</a>
-    <a href="legal/terms.html">Terms</a>
-    <a href="legal/privacy.html">Privacy</a>
-    <a href="legal/refunds.html">Refunds</a>
-    <a href="mailto:support@deardiary.app">support@deardiary.app</a>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="./"><img src="assets/icon.png" alt="" width="26" height="26" />DearDiary</a>
+        <p>The work journal that writes itself.</p>
+      </div>
+      <div class="foot-col">
+        <h2>Product</h2>
+        <ul>
+          <li><a href="download.html">Download</a></li>
+          <li><a href="./#pricing">Pricing</a></li>
+          <li><a href="activate.html">Retrieve a license key</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h2>Help</h2>
+        <ul>
+          <li><a href="docs/">Docs</a></li>
+          <li><a href="docs/troubleshooting.html">Troubleshooting</a></li>
+          <li><a href="mailto:support@deardiary.app">support@deardiary.app</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="legal/terms.html">Terms</a></li>
+          <li><a href="legal/privacy.html">Privacy</a></li>
+          <li><a href="legal/refunds.html">Refunds</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 DearDiary · <a href="https://github.com/andrewfowl/deardiary">MIT-licensed on GitHub</a></span>
+      <span>Set in old-style serifs, on purpose.</span>
+    </div>
   </div>
 </footer>
 
