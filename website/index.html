@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DearDiary: the work journal that writes itself, for Windows</title>
-  <meta name="description" content="DearDiary keeps a journal of your Windows workday so you don't have to. It records quietly, writes a timeline, a daily entry and your standup, and everything stays on your PC." />
+  <title>DearDiary: the automatic work journal for Windows</title>
+  <meta name="description" content="The automatic, AI-written work journal, native on Windows 10 and 11. DearDiary records quietly, writes a timeline, a daily entry and your standup, and everything stays on your PC." />
   <meta name="theme-color" content="#f7f5ef" />
   <link rel="canonical" href="https://deardiary.app/" />
   <meta property="og:type" content="website" />
@@ -54,9 +54,10 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow"><span class="label">A work journal for Windows · <em>kept for you</em></span></p>
+        <p class="eyebrow"><span class="label">The automatic work journal · <em>built for Windows</em></span></p>
         <h1 class="display">Dear diary, today I <em>actually remembered</em> what I did.</h1>
         <p class="hero-sub">
+          The AI work journal Mac users have had for a while, now native on Windows.
           DearDiary watches your workday quietly, writes down what you were really doing,
           and drafts your standup before anyone asks.
         </p>
@@ -69,6 +70,7 @@
         </div>
         <p class="fineprint">Free for 14 days. No account, no card. Nothing is recorded until you say so.</p>
         <ul class="facts" aria-label="At a glance">
+          <li>Native on Windows 10 &amp; 11</li>
           <li>Stays on your PC</li>
           <li>Works offline with Ollama</li>
           <li>MIT-licensed source</li>
@@ -210,10 +212,10 @@
   <section id="compare">
     <div class="wrap">
       <div class="section-head">
-        <span class="label">Instead of</span>
+        <span class="label">Compared</span>
         <div>
-          <h2>Not a timer. <em>Not a surveillance tool.</em></h2>
-          <p class="section-intro">Time trackers count which app was open. DearDiary writes down what you were doing in it, then keeps it to itself.</p>
+          <h2>Mac users have Dayflow.<br /><em>Windows users have DearDiary.</em></h2>
+          <p class="section-intro">Dayflow made the screen-to-journal idea popular on the Mac, and it's very good. But it only runs on macOS. If your workday happens on a Windows PC, DearDiary is the same idea, built for where you work.</p>
         </div>
       </div>
       <div class="table-scroll">
@@ -221,39 +223,46 @@
           <thead>
             <tr>
               <th scope="col"><span class="sr-only">Question</span></th>
-              <th scope="col">Timesheets &amp; timers</th>
-              <th scope="col">Typical auto-trackers</th>
+              <th scope="col">Timers &amp; app trackers</th>
+              <th scope="col">Dayflow</th>
               <th scope="col" class="us">DearDiary</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th scope="row">What you do</th>
-              <td>Start, stop, and label everything</td>
-              <td>Nothing, then tidy up categories</td>
-              <td class="us">Nothing</td>
+              <th scope="row">Runs on</th>
+              <td>Varies</td>
+              <td>macOS 14 or later</td>
+              <td class="us">Windows 10 &amp; 11</td>
             </tr>
             <tr>
               <th scope="row">What you get</th>
-              <td>Whatever you remembered to log</td>
-              <td>Minutes per app and website</td>
-              <td class="us">A written timeline, daily entry and standup</td>
+              <td>Minutes per app, or whatever you remembered to log</td>
+              <td>Timeline, daily &amp; weekly summaries, standup, chat</td>
+              <td class="us">Timeline, daily journal entry, standup, chat</td>
             </tr>
             <tr>
               <th scope="row">Where it lives</th>
-              <td>Usually someone's cloud</td>
               <td>Usually the vendor's cloud</td>
-              <td class="us">One folder on your PC</td>
+              <td>On your Mac</td>
+              <td class="us">On your PC</td>
             </tr>
             <tr>
-              <th scope="row">Who sees it</th>
-              <td>Often your manager</td>
-              <td>Often your manager</td>
-              <td class="us">You</td>
+              <th scope="row">Claude &amp; GPT</th>
+              <td>&mdash;</td>
+              <td>Through their CLI tools, with a paid ChatGPT or Claude plan</td>
+              <td class="us">Your own API key, paid per use, or any OpenAI-compatible endpoint</td>
+            </tr>
+            <tr>
+              <th scope="row">Price</th>
+              <td>Often per seat, per month</td>
+              <td>Free, open source</td>
+              <td class="us">$49 once or $19/year, 14-day free trial</td>
             </tr>
           </tbody>
         </table>
       </div>
+      <p class="footnote">Dayflow details from dayflow.so, November 2026. Dayflow has a weekly review and Markdown export that DearDiary doesn't yet. If you're on a Mac, use Dayflow.</p>
     </div>
   </section>
 
@@ -357,8 +366,16 @@
           <p>One click on the tray icon. Capture also stops automatically when your screen locks or you go idle.</p>
         </details>
         <details>
+          <summary>How is this different from Dayflow?</summary>
+          <p>Same idea, different operating system. Dayflow is a native Mac app that needs macOS 14 or later. DearDiary is built for Windows 10 and 11: it lives in the tray, pauses on lock and idle, and stores everything in your Windows profile. For Claude or GPT, DearDiary uses your own API key, so you pay a few cents per day rather than needing a ChatGPT or Claude subscription.</p>
+        </details>
+        <details>
+          <summary>Dayflow is free. Why does DearDiary cost money?</summary>
+          <p>Because Dayflow doesn't run on Windows, and building and maintaining a Windows app is real work. The 14-day trial is the full product, so you can decide whether $49, paid once, is worth it before spending anything.</p>
+        </details>
+        <details>
           <summary>Is there a Mac version?</summary>
-          <p>DearDiary is Windows-first. On macOS, we'll happily point you to Dayflow, the open-source app that inspired us.</p>
+          <p>No, and we don't plan one. On a Mac, use Dayflow, the open-source app that inspired us. Plenty of people run Dayflow on a MacBook and DearDiary on their Windows work PC.</p>
         </details>
         <details>
           <summary>Refunds?</summary>
